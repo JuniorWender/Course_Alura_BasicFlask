@@ -3,3 +3,7 @@ class Game:
         self.name = name
         self.category = category
         self.console = console
+
+
+
+        

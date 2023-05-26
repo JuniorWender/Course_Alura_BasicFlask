@@ -1,0 +1,4 @@
+            {% if message == 'Invalid user or password! Try again!' %}
+            <li class="alert alert-danger">{{ message }}</li>
+        {% else %}
+            <li class="alert alert-success">{{ message }}</li>

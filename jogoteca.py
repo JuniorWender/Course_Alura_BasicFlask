@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, flash
 
 class Game:
     def __init__(self, name, category, console):
@@ -13,6 +13,7 @@ game4 = Game('Skyrim', 'RPG', 'PC')
 list = [game1, game2, game3,game4]
 
 app = Flask(__name__)
+app.secret_key = 'criptografia'
 
 # ------------------------------------------------- Pages ----------------------------------------------------------------
 @app.route('/')
@@ -24,6 +25,10 @@ def index():
 def new():
     return render_template('register.html', title='Register A New Game')
 
+@app.route('/login')
+def login():
+    return render_template('login.html', title='Login')
+
 # ------------------------------------------------- Methods ----------------------------------------------------------------
 @app.route('/create', methods=['POST'])
 def create():
@@ -32,6 +37,24 @@ def create():
     plataform = request.form['plataform']
     game = Game(name, category, plataform)
     list.append(game)
+    return redirect('/')
+
+@app.route('/auth', methods=['POST'])
+def auth():
+    user = request.form['user']
+    password = request.form['password']
+    if user == 'admin' and password == 'admin':
+        session['logged_user'] = request.form['user']
+        flash(session['logged_user'] + ' Logged successfully!')
+        return redirect('/')
+    else:
+        flash('Invalid user or password! Try again!')
+        return redirect('/login')
+    
+@app.route('/logout')
+def logout():
+    session['logged_user'] = None
+    flash('No user logged!')
     return redirect('/')
 
 app.run(debug=True)
