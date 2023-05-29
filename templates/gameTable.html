@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 {% block content%}
-        <button type="button" class="btn btn-primary btn-novo" > New Game </button>
+        <button type="button" class="btn btn-primary btn-novo "><a href="{{ url_for('new') }}" class="text-decoration-none text-light"> New Game </a></button>
         <table class="table table-striped table-responsive table-bordered mt-4">
             <thead class="thead-default">
                 <tr>

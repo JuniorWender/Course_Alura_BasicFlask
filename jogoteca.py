@@ -13,14 +13,14 @@ game4 = Game('Skyrim', 'RPG', 'PC')
 list = [game1, game2, game3,game4]
 
 class User:
-    def __init__(self, id, name, password):
-        self.id = id
+    def __init__(self, name, nickname, password):
         self.name = name
+        self.nickname = nickname
         self.password = password
 
-user1 = User('1', 'admin', 'admin')
-user2 = User('2', 'user', 'user')
-users = {user1.id: user1, user2.id: user2}
+user1 = User('admin', 'o Admin', 'admin')
+user2 = User('user', 'usuario', 'user')
+users = {user1.name: user1, user2.name: user2}
 
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ def index():
 @app.route('/new')
 def new():
     if 'logged_user' not in session or session['logged_user'] == None:
-        return redirect(url_for('login', next=url_for('create'))) # quary string
+        return redirect(url_for('login', next=url_for('new'))) # quary string
     return render_template('register.html', title='Register A New Game')
 
 @app.route('/login')
